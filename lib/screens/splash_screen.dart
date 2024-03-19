@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,10 +14,23 @@ class _SplashScreenState extends State<SplashScreen> {
     return const Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Icon(
-          Icons.movie,
-          size: 80,
-          color: Colors.green,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.movie,
+              size: 80,
+              color: Colors.green,
+            ),
+            Text(
+              "Movie Hub",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
+            CupertinoActivityIndicator(color: Colors.white,)
+          ],
         ),
       ),
     );
