@@ -21,20 +21,32 @@ class _HomePageState extends State<HomePage> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CustomToolBar(),
-                const SizedBox(
-                  height: 10,
-                ),
-                PopularSlider(size: size),
-                const SizedBox(
-                  height: 10,
-                ),
-                MoviesListView(title: "Now Playing", future: ApiServices().getNowPlayingMovies(),),
-                MoviesListView(title: "Top Rated Movies", future: ApiServices().getTopRatedMovies(),),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CustomToolBar(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  PopularSlider(size: size),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MoviesListView(
+                    title: "Now Playing",
+                    future: ApiServices().getNowPlayingMovies(),
+                  ),
+                  MoviesListView(
+                    title: "Top Rated Movies",
+                    future: ApiServices().getTopRatedMovies(),
+                  ),
+                  MoviesListView(
+                    title: "Upcoming Movies",
+                    future: ApiServices().getupcomingMovies(),
+                  ),
+                ],
+              ),
             ),
           ),
         ));
