@@ -19,7 +19,6 @@ class ApiServices {
       List<MovieModel> movies = results
           .map((movie) => MovieModel.fromJson(movie as Map<String, dynamic>))
           .toList();
-      Logger().f(movies[0].posterPath);
 
       return movies;
     } else {
