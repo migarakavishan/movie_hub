@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_hub/services/api_service.dart';
 
 import 'widgets/custom_tool_bar.dart';
 import 'widgets/movies_list_view.dart';
@@ -31,7 +32,8 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const MoviesListView(),
+                MoviesListView(title: "Now Playing", future: ApiServices().getNowPlayingMovies(),),
+                MoviesListView(title: "Top Rated Movies", future: ApiServices().getTopRatedMovies(),),
               ],
             ),
           ),

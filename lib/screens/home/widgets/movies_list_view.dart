@@ -1,27 +1,26 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../models/movie_model.dart';
-import '../../../services/api_service.dart';
 
 class MoviesListView extends StatelessWidget {
-  const MoviesListView({
-    super.key,
-  });
+  const MoviesListView({super.key, required this.title, required this.future});
+
+  final String title;
+  final Future<List<MovieModel>> future;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Now Playing",
-          style: TextStyle(
+        Text(
+          title,
+          style: const TextStyle(
               color: Colors.grey, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const Divider(),
         FutureBuilder(
-            future: ApiServices().getNowPlayingMovies(),
+            future: future,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -52,17 +51,20 @@ class MoviesListView extends StatelessWidget {
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.network(
-                                        movies[index].posterPath)),
+                                        movies[index].posterPath, width: 60, height: 100, fit: BoxFit.cover )),
                                 const SizedBox(
                                   width: 5,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      movies[index].title,
-                                      style: TextStyle(
-                                          color: Colors.grey.shade300),
+                                    SizedBox(
+                                      width: 120,
+                                      child: Text(
+                                        movies[index].title,
+                                        style: TextStyle(
+                                            color: Colors.grey.shade300),
+                                      ),
                                     ),
                                     Container(
                                         padding: const EdgeInsets.symmetric(
