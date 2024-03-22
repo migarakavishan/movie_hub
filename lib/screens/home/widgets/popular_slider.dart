@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:movie_hub/screens/movie_view/movie_view.dart';
 
 import '../../../models/movie_model.dart';
@@ -32,10 +33,13 @@ class PopularSlider extends StatelessWidget {
                     padding: const EdgeInsets.all(3.0),
                     child: GestureDetector(
                       onTap: () {
+                        Logger().e(movie.id);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MovieView()));
+                                builder: (context) => MovieView(
+                                      movie: movie,
+                                    )));
                       },
                       child: Container(
                         width: size.width,

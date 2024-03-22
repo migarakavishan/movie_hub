@@ -10,6 +10,7 @@ class ApiServices {
   final nowPlaying = 'https://api.themoviedb.org/3/movie/now_playing?';
   final topRatedMovies = 'https://api.themoviedb.org/3/movie/top_rated?';
   final upcomingMovies = 'https://api.themoviedb.org/3/movie/upcoming?';
+  final movieData = 'https://api.themoviedb.org/3/movie/';
 
   Future<List<MovieModel>> getPopularMovies() async {
     final response = await http.get(Uri.parse('$propularMovies$apiKey'));
@@ -69,6 +70,19 @@ class ApiServices {
     } else {
       Logger().e('Error - ${response.statusCode}');
       return [];
+    }
+  }
+
+  Future<MovieModel?> getMovieDetails(int id) async {
+    final response = await http.get(Uri.parse('$movieData$id?$apiKey'));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> body = jsonDecode(response.body);
+      MovieModel movie = MovieModel.fromJson(body);
+      return movie;
+    } else {
+      Logger().e('Error - ${response.statusCode}');
+      return null;
     }
   }
 }
