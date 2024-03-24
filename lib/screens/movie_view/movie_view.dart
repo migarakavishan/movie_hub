@@ -146,6 +146,17 @@ class _MovieViewState extends State<MovieView> {
                             },
                           ),
                         ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          "Cast",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18),
+                        ),
+                        const Divider(),
                       ],
                     )
                   ],
