@@ -126,13 +126,15 @@ class _MovieViewState extends State<MovieView> {
                                       color: Colors.grey.shade900,
                                       borderRadius: BorderRadius.circular(20)),
                                   child: ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundImage: NetworkImage(movie
-                                                  .companies![index].logo ==
-                                              null
-                                          ? 'https://img.freepik.com/premium-vector/company-icon-simple-element-illustration-company-concept-symbol-design-can-be-used-web-mobile_159242-7784.jpg'
-                                          : 'https://image.tmdb.org/t/p/w500${movie.companies![index].logo}'),
-                                    ),
+                                    leading: Image(
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.contain,
+                                        image: NetworkImage(movie
+                                                    .companies![index].logo ==
+                                                null
+                                            ? 'https://icons.veryicon.com/png/o/business/oa-attendance-icon/company-27.png'
+                                            : 'https://image.tmdb.org/t/p/w500${movie.companies![index].logo}')),
                                     title: Text(
                                       movie.companies![index].name,
                                       style:
