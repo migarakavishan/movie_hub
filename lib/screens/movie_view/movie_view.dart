@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_hub/models/actor_model.dart';
 import 'package:movie_hub/models/movie_model.dart';
 import 'package:movie_hub/services/api_service.dart';
 
@@ -157,6 +158,66 @@ class _MovieViewState extends State<MovieView> {
                               fontSize: 18),
                         ),
                         const Divider(),
+                        FutureBuilder(
+                            future: ApiServices().getCast(widget.movie.id),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (snapshot.hasError) {
+                                return const Text(
+                                  "Something went wrong",
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              }
+
+                              List<ActorModel> actors = snapshot.data!;
+                              return Column(
+                                children: List.generate(
+                                  actors.length,
+                                  (index) => Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 4),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade900,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: ListTile(
+                                          leading: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: Image(
+                                                  height: 60,
+                                                  width: 60,
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(actors[
+                                                                  index]
+                                                              .image ==
+                                                          null
+                                                      ? 'https://cdn-icons-png.flaticon.com/512/475/475283.png'
+                                                      : 'https://image.tmdb.org/t/p/w500${actors[index].image}'))),
+                                          title: Text(
+                                            actors[index].name,
+                                            style: TextStyle(
+                                                color: Colors.grey.shade300),
+                                          ),
+                                          subtitle:
+                                              actors[index].character != null
+                                                  ? Text(
+                                                      actors[index].character!,
+                                                      style: const TextStyle(
+                                                          color: Colors.grey),
+                                                    )
+                                                  : null),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
                       ],
                     )
                   ],

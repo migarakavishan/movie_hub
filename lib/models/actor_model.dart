@@ -10,6 +10,7 @@ class ActorModel {
     return ActorModel(
       name: json['name'],
       id: json['id'],
+      character: json['character'],
       image: json['profile_path']
     );
   }
