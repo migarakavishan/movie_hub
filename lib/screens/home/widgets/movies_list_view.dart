@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../models/movie_model.dart';
+import '../../movie_view/movie_view.dart';
 
 class MoviesListView extends StatelessWidget {
   const MoviesListView({super.key, required this.title, required this.future});
@@ -23,80 +25,84 @@ class MoviesListView extends StatelessWidget {
             future: future,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                        4,
+                        (index) => Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Shimmer.fromColors(
+                                  baseColor: Colors.grey.shade900,
+                                  highlightColor: Colors.grey.shade800,
+                                  child: Container(
+                                    width: 90,
+                                    height: 140,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  )),
+                            )),
+                  ),
+                );
               }
               if (snapshot.hasError) {
                 return const Text("Something went wrong");
               }
               List<MovieModel> movies = snapshot.data!;
               return SizedBox(
-                height: 115,
+                height: 140,
                 child: ListView.builder(
                     itemCount: movies.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 220,
-                          child: Container(
-                            width: 220,
-                            height: 110,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade900,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MovieView(
+                                        movie: movies[index],
+                                      )));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: SizedBox(
+                            width: 90,
+                            height: 140,
+                            child: Stack(
                               children: [
-                                ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                        movies[index].posterPath, width: 60, height: 100, fit: BoxFit.cover )),
-                                const SizedBox(
-                                  width: 5,
+                                Container(
+                                  width: 90,
+                                  height: 140,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade900,
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              movies[index].posterPath))),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 120,
-                                      child: Text(
-                                        movies[index].title,
-                                        style: TextStyle(
-                                            color: Colors.grey.shade300),
-                                      ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    width: 90,
+                                    height: 28,
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.6),
+                                        borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10))),
+                                    child: Text(
+                                      movies[index].title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
-                                    Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8),
-                                        decoration: BoxDecoration(
-                                            color: Colors.deepOrange
-                                                .withOpacity(0.4),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              movies[index]
-                                                  .voteAverage
-                                                  .toString()
-                                                  .substring(0, 3),
-                                              style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Icon(
-                                              Icons.star,
-                                              color: Colors.yellow.shade600,
-                                              size: 14,
-                                            )
-                                          ],
-                                        ))
-                                  ],
+                                  ),
                                 )
                               ],
                             ),
