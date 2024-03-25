@@ -38,6 +38,7 @@ dependencies:
   http: ^1.2.0
   logger: ^2.1.0
   carousel_slider: ^4.2.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

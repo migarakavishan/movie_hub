@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:movie_hub/screens/movie_view/movie_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../models/movie_model.dart';
 import '../../../services/api_service.dart';
@@ -20,7 +21,16 @@ class PopularSlider extends StatelessWidget {
         future: ApiServices().getPopularMovies(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return Shimmer.fromColors(
+                baseColor: Colors.grey.shade900,
+                highlightColor: Colors.grey.shade800,
+                child: Container(
+                  width: size.width * 0.95,
+                  height: size.height * 0.22,
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(20)),
+                ));
           }
           List<MovieModel> movies = snapshot.data!;
           return CarouselSlider(
