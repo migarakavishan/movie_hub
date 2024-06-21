@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:movie_hub/models/actor_model.dart';
 import 'package:movie_hub/models/movie_model.dart';
 
 class ApiServices {
-  final apiKey = 'api_key=2058ec167f96bdbcd73b462bd88f128e';
+  final String apiKey = dotenv.env['API_KEY'] ?? 'API_KEY not found';
   final propularMovies = 'https://api.themoviedb.org/3/movie/popular?';
   final nowPlaying = 'https://api.themoviedb.org/3/movie/now_playing?';
   final topRatedMovies = 'https://api.themoviedb.org/3/movie/top_rated?';
