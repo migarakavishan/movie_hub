@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
               color: Colors.green,
             ),
             Text(
-              "Movie Hub",
+              "Movie hub",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 25,
