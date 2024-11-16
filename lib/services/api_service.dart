@@ -8,10 +8,11 @@ import 'package:movie_hub/models/movie_model.dart';
 
 class ApiServices {
   final String apiKey = dotenv.env['API_KEY'] ?? 'API_KEY not found';
-  final propularMovies = 'https://api.themoviedb.org/3/movie/popular?';
-  final nowPlaying = 'https://api.themoviedb.org/3/movie/now_playing?';
-  final topRatedMovies = 'https://api.themoviedb.org/3/movie/top_rated?';
-  final upcomingMovies = 'https://api.themoviedb.org/3/movie/upcoming?';
+  final propularMovies = 'https://api.themoviedb.org/3/movie/popular?api_key=';
+  final nowPlaying = 'https://api.themoviedb.org/3/movie/now_playing?api_key=';
+  final topRatedMovies =
+      'https://api.themoviedb.org/3/movie/top_rated?api_key=';
+  final upcomingMovies = 'https://api.themoviedb.org/3/movie/upcoming?api_key=';
   final movieData = 'https://api.themoviedb.org/3/movie/';
   final cast = 'https://api.themoviedb.org/3/movie/';
 
@@ -77,7 +78,7 @@ class ApiServices {
   }
 
   Future<MovieModel?> getMovieDetails(int id) async {
-    final response = await http.get(Uri.parse('$movieData$id?$apiKey'));
+    final response = await http.get(Uri.parse('$movieData$id?api_key=$apiKey'));
 
     if (response.statusCode == 200) {
       Map<String, dynamic> body = jsonDecode(response.body);
@@ -90,7 +91,8 @@ class ApiServices {
   }
 
   Future<List<ActorModel>> getCast(int id) async {
-    final response = await http.get(Uri.parse('$cast$id/credits?$apiKey'));
+    final response =
+        await http.get(Uri.parse('$cast$id/credits?api_key=$apiKey'));
     if (response.statusCode == 200) {
       Map<String, dynamic> body = jsonDecode(response.body);
       List<dynamic> cast = body['cast'];

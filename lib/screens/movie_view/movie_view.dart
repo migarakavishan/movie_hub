@@ -56,7 +56,7 @@ class _MovieViewState extends State<MovieView> {
                               child: BackButton(
                                 color: Colors.white,
                                 style: ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
+                                    backgroundColor: WidgetStatePropertyAll(
                                         Colors.black.withOpacity(0.5))),
                               )),
                         ],
